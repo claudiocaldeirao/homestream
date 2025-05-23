@@ -8,20 +8,22 @@ import (
 )
 
 type Config struct {
-	CatalogFolder string
-	OmdbApiKey    string
-	MongoURI      string
-	MongoDatabase string
+	CatalogFolder    string
+	MoviesCollection string
+	OmdbApiKey       string
+	MongoURI         string
+	MongoDatabase    string
 }
 
 func Load() *Config {
 	_ = godotenv.Load()
 
 	cfg := &Config{
-		CatalogFolder: getEnv("CATALOG_FOLDER", "/homestream_catalog"),
-		OmdbApiKey:    getEnv("OMDB_API_KEY", ""),
-		MongoURI:      getEnv("MONGODB_URI", "mongodb://localhost:27017"),
-		MongoDatabase: getEnv("MONGODB_DATABASE", "homestreamdb"),
+		CatalogFolder:    getEnv("CATALOG_FOLDER", "/homestream_catalog"),
+		MoviesCollection: getEnv("MOVIES_COLLECTION", "movies"),
+		OmdbApiKey:       getEnv("OMDB_API_KEY", ""),
+		MongoURI:         getEnv("MONGODB_URI", "mongodb://localhost:27017"),
+		MongoDatabase:    getEnv("MONGODB_DATABASE", "homestreamdb"),
 	}
 
 	if cfg.OmdbApiKey == "" {
