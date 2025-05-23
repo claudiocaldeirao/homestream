@@ -31,7 +31,7 @@ export default function HomePage() {
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {movies.map((movie) => (
-            <Link href={`/movies/${movie.Name}`} key={movie.Name}>
+            <Link href={`/movies/${movie.id}`} key={movie.id}>
               <div className="border rounded-xl shadow hover:shadow-lg p-2 cursor-pointer">
                 <Image
                   src={movie.Metadata.Poster || "/images/clapperboard.png"}

@@ -19,7 +19,7 @@ export type OmdbMetadata = {
 };
 
 export type Movie = {
-  _id: string;
+  id: string;
   Name: string;
   Path: string;
   Ext: string;

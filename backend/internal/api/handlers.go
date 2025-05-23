@@ -8,6 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo/options"
 
 	"github.com/claudiocaldeirao/homestream/backend/config"
@@ -47,14 +48,21 @@ func (h *Handler) GetMovies(c *gin.Context) {
 }
 
 func (h *Handler) GetMovieByID(c *gin.Context) {
-	id := c.Param("id")
+	idParam := c.Param("id")
+
+	objectID, err := primitive.ObjectIDFromHex(idParam)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid movie ID"})
+		return
+	}
+
 	db := database.GetDatabase(h.Cfg)
 	collection := db.Collection(h.Cfg.MoviesCollection)
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
 	var movie entity.Movie
-	err := collection.FindOne(ctx, bson.M{"_id": id}).Decode(&movie)
+	err = collection.FindOne(ctx, bson.M{"_id": objectID}).Decode(&movie)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Movie not found"})
 		return
