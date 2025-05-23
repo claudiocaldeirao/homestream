@@ -2,7 +2,9 @@ package api
 
 import (
 	"context"
+	"fmt"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
 
@@ -69,4 +71,43 @@ func (h *Handler) GetMovieByID(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, movie)
+}
+
+func (h *Handler) StreamMovie(c *gin.Context) {
+	idParam := c.Param("id")
+	objectid, err := primitive.ObjectIDFromHex(idParam)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid movie ID"})
+		return
+	}
+
+	db := database.GetDatabase(h.Cfg)
+	collection := db.Collection(h.Cfg.MoviesCollection)
+
+	var movie entity.Movie
+	err = collection.FindOne(context.Background(), bson.M{"_id": objectid}).Decode(&movie)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Movie not found"})
+		return
+	}
+
+	file, err := os.Open(movie.Path)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not open file"})
+		return
+	}
+	defer file.Close()
+
+	stat, err := file.Stat()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not stat file"})
+		return
+	}
+
+	c.Header("Content-Type", "video/mp4")
+	c.Header("Content-Length", fmt.Sprintf("%d", stat.Size()))
+	c.Header("Accept-Ranges", "bytes")
+
+	http.ServeContent(c.Writer, c.Request, movie.Name+".mp4", stat.ModTime(), file)
 }

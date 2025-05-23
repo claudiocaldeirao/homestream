@@ -1,6 +1,7 @@
 import axios from "axios";
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import { WatchButton } from "./watch/components/WatchButton";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
 
@@ -38,6 +39,7 @@ export default async function MovieDetails({
         <p>
           <strong>IMDB Rating:</strong> {movie.Metadata.ImdbRating}
         </p>
+        <WatchButton id={movie.id} />
       </div>
     );
   } catch (err) {

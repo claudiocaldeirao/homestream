@@ -35,5 +35,6 @@ func main() {
 	}))
 	router.GET("/movies", handler.GetMovies)
 	router.GET("/movies/:id", handler.GetMovieByID)
+	router.GET("/movies/:id/watch", handler.StreamMovie)
 	router.Run(fmt.Sprintf(":%s", config.ApiPort))
 }
