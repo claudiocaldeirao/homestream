@@ -30,7 +30,6 @@ func ScanForMovies(cfg *config.Config) {
 
 	db := database.GetDatabase(cfg)
 	collection := db.Collection(cfg.MoviesCollection)
-
 	ctx := context.Background()
 
 	go func() {
@@ -39,16 +38,27 @@ func ScanForMovies(cfg *config.Config) {
 			if videoExtensions[ext] {
 				fmt.Println("🎥 Found:", file)
 
-				video := entity.Movie{
+				movie := entity.Movie{
 					Name:    filepath.Base(file),
 					Path:    file,
 					Ext:     ext,
 					Scanned: time.Now().Unix(),
 				}
 
-				_, err := collection.InsertOne(ctx, video)
+				_, err := collection.InsertOne(ctx, movie)
 				if err != nil {
 					fmt.Fprintf(os.Stderr, "❌ Error inserting %s: %v\n", file, err)
+					continue
+				}
+
+				metadata, err := FetchMetadataFromOMDb(cfg, movie.Name)
+				if err != nil {
+					fmt.Printf("⚠️  Metadata not found for %s: %v\n", movie.Name, err)
+					continue
+				}
+
+				if err := UpdateMetadataInMongo(collection, movie, metadata); err != nil {
+					fmt.Printf("❌ Error updating metadata for %s: %v\n", movie.Path, err)
 				}
 			}
 		}
