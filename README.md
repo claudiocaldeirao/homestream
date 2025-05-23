@@ -31,6 +31,21 @@ This project uses environment variables to configure paths and external integrat
 | MONGODB_DATABASE  | Name of the MongoDB database                     | No       | homestreamdb              |
 | API_PORT          | Port which the api will be exposed               | No       | 8080                      |
 
+## Client folder structure
+
+```
+src/
+└── app/
+    ├── layout.tsx
+    ├── page.tsx                  → Movies catalog ('/')
+    └── movies/
+        └── [id]/
+            ├── page.tsx          → Movie details ('/movies/:id')
+            └── watch/
+                └── page.tsx      → Movie streaming ('/movies/:id/watch')
+
+```
+
 ## License
 
 This project is licensed under the [MIT License](LISCENSE).
