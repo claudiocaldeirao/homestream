@@ -54,7 +54,7 @@ func ScanForMovies(cfg *config.Config) {
 				metadata, err := FetchMetadataFromOMDb(cfg, movie.Name)
 				if err != nil {
 					fmt.Printf("⚠️  Metadata not found for %s: %v\n", movie.Name, err)
-					continue
+					metadata = entity.NewDefaultOmdbMetadata(movie.Name)
 				}
 
 				if err := UpdateMetadataInMongo(collection, movie, metadata); err != nil {

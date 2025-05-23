@@ -19,3 +19,25 @@ type OmdbMetadata struct {
 	Response   string `json:"Response"`
 	Error      string `json:"Error"`
 }
+
+func NewDefaultOmdbMetadata(title string) *OmdbMetadata {
+	return &OmdbMetadata{
+		Title:      title,
+		Year:       "N/A",
+		Rated:      "N/A",
+		Released:   "N/A",
+		Runtime:    "N/A",
+		Genre:      "N/A",
+		Director:   "N/A",
+		Plot:       "Metadata not found.",
+		Language:   "N/A",
+		Country:    "N/A",
+		Awards:     "N/A",
+		Poster:     "",
+		Metascore:  "N/A",
+		ImdbRating: "N/A",
+		ImdbID:     "",
+		Response:   "False",
+		Error:      "Movie not found in OMDb",
+	}
+}

@@ -37,3 +37,14 @@ func GetDatabase(cfg *config.Config) *mongo.Database {
 	}
 	return Client.Database(cfg.MongoDatabase)
 }
+
+func DropDatabase(cfg *config.Config) {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	err := Client.Database(cfg.MongoDatabase).Drop(ctx)
+
+	if err != nil {
+		log.Fatalf("Failed to drop database: %v", err)
+	}
+}
