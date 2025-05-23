@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
 import { Movie } from "./movies/types";
+import { APP_NAME } from "./constants";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
 
@@ -16,7 +17,6 @@ export default function HomePage() {
     const fetchMovies = async () => {
       setLoading(true);
       const res = await axios.get(`${API_BASE}/movies?page=${page}&limit=12`);
-      console.log(res.data);
       setMovies(res.data);
       setLoading(false);
     };
@@ -25,27 +25,31 @@ export default function HomePage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Movie Catalog</h1>
+      <h1 className="text-2xl font-bold mb-4">{APP_NAME}</h1>
       {loading ? (
         <p>Loading...</p>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {movies.map((movie) => (
-            <Link href={`/movies/${movie.id}`} key={movie.id}>
-              <div className="border rounded-xl shadow hover:shadow-lg p-2 cursor-pointer">
-                <Image
-                  src={movie.Metadata.Poster || "/images/clapperboard.png"}
-                  alt={movie.Metadata.Title}
-                  width={512}
-                  height={512}
-                  className="w-full h-48 object-cover mb-2 rounded"
-                />
-                <h2 className="text-md font-semibold truncate">
-                  {movie.Metadata.Title}
-                </h2>
-              </div>
-            </Link>
-          ))}
+          {movies?.length > 0 ? (
+            movies.map((movie) => (
+              <Link href={`/movies/${movie.id}`} key={movie.id}>
+                <div className="border rounded-xl shadow hover:shadow-lg p-2 cursor-pointer">
+                  <Image
+                    src={movie.Metadata.Poster || "/images/clapperboard.png"}
+                    alt={movie.Metadata.Title}
+                    width={512}
+                    height={512}
+                    className="w-full h-48 object-cover mb-2 rounded"
+                  />
+                  <h2 className="text-md font-semibold truncate">
+                    {movie.Metadata.Title}
+                  </h2>
+                </div>
+              </Link>
+            ))
+          ) : (
+            <p>No movies found</p>
+          )}
         </div>
       )}
       <div className="mt-4 flex justify-center gap-2">
