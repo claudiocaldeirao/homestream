@@ -13,6 +13,7 @@ type Config struct {
 	OmdbApiKey       string
 	MongoURI         string
 	MongoDatabase    string
+	ApiPort          string
 }
 
 func Load() *Config {
@@ -24,6 +25,7 @@ func Load() *Config {
 		OmdbApiKey:       getEnv("OMDB_API_KEY", ""),
 		MongoURI:         getEnv("MONGODB_URI", "mongodb://localhost:27017"),
 		MongoDatabase:    getEnv("MONGODB_DATABASE", "homestreamdb"),
+		ApiPort:          getEnv("API_PORT", "8080"),
 	}
 
 	if cfg.OmdbApiKey == "" {
