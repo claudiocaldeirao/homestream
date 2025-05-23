@@ -22,12 +22,14 @@ This project uses environment variables to configure paths and external integrat
 
 #### 🔑 Expected Environment Variables
 
-| Name             | Description                                      | Required | Default Value             |
-| ---------------- | ------------------------------------------------ | -------- | ------------------------- |
-| CATALOG_FOLDER   | Root directory where video files will be scanned | No       | /homestream_catalog       |
-| OMDB_API_KEY     | API key for OMDb                                 | Yes      |                           |
-| MONGODB_URI      | MongoDB connection URI                           | No       | mongodb://localhost:27017 |
-| MONGODB_DATABASE | Name of the MongoDB database                     | No       | homestreamdb              |
+| Name              | Description                                      | Required | Default Value             |
+| ----------------- | ------------------------------------------------ | -------- | ------------------------- |
+| CATALOG_FOLDER    | Root directory where video files will be scanned | No       | /homestream_catalog       |
+| MOVIES_COLLECTION | collection name for metadata                     | No       | movies                    |
+| OMDB_API_KEY      | API key for OMDb                                 | Yes      |                           |
+| MONGODB_URI       | MongoDB connection URI                           | No       | mongodb://localhost:27017 |
+| MONGODB_DATABASE  | Name of the MongoDB database                     | No       | homestreamdb              |
+| API_PORT          | Port which the api will be exposed               | No       | 8080                      |
 
 ## License
 
