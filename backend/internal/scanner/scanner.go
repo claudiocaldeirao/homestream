@@ -6,6 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 	"sync"
+
+	"github.com/claudiocaldeirao/homestream/backend/config"
 )
 
 var videoExtensions = map[string]bool{
@@ -18,7 +20,8 @@ var videoExtensions = map[string]bool{
 	".webm": true,
 }
 
-func ScanForMovies(root string) {
+func ScanForMovies(cfg *config.Config) {
+	root := cfg.CatalogFolder
 	files := make(chan string, 100)
 	var wg sync.WaitGroup
 

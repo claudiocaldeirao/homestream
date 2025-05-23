@@ -11,5 +11,5 @@ func main() {
 
 	database.Connect(config)
 
-	scanner.ScanForMovies(config.CatalogFolder)
+	scanner.ScanForMovies(config)
 }
