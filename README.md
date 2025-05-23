@@ -16,6 +16,19 @@ HomeStream is a self-hosted media streaming platform inspired by Netflix. It all
 - MongoDB
 - Node.js & npm (for the frontend)
 
+## Environment Configuration
+
+This project uses environment variables to configure paths and external integrations. You can define these variables directly in your terminal or by using a .env file.
+
+#### 🔑 Expected Environment Variables
+
+| Name             | Description                                      | Required | Default Value             |
+| ---------------- | ------------------------------------------------ | -------- | ------------------------- |
+| CATALOG_FOLDER   | Root directory where video files will be scanned | No       | /homestream_catalog       |
+| OMDB_API_KEY     | API key for OMDb                                 | Yes      |                           |
+| MONGODB_URI      | MongoDB connection URI                           | No       | mongodb://localhost:27017 |
+| MONGODB_DATABASE | Name of the MongoDB database                     | No       | homestreamdb              |
+
 ## License
 
 This project is licensed under the [MIT License](LISCENSE).
