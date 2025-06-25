@@ -1,6 +1,6 @@
 # HomeStream
 
-HomeStream is a self-hosted media streaming platform inspired by Netflix. It allows you to organize, enrich, and stream your local video library through a modern web interface.
+HomeStream is a self-hosted media streaming platform inspired by Jellyfin. It allows you to organize, enrich, and stream your local video library through a modern web interface.
 
 ## Features
 
